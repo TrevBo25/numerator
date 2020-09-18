@@ -1,24 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
+import axios from 'axios';
+
 import './App.css';
 
-function App() {
+import ZipcodeSearch from './components/ZipcodeSearch';
+import Results from './components/Results';
+
+const App = () => {
+  const [results, setResults] = React.useState([]);
+
+  const searchZipcode = (zip) => {
+    axios.get(`http://localhost:3001/?zipcode=${zip}`)
+      .then(response => {
+        response.data.results.forEach(result => {
+          if (!window.localStorage.getItem(result.name)) {
+            window.localStorage.setItem(result.name, JSON.stringify({visited: false}))
+          }
+        })
+        setResults(response.data.results)
+      })
+      .catch(err => {
+        alert("Not Found, please try another zip")
+      })
+  };
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Search a zipcode!</h1>
+      <ZipcodeSearch searchZipcode={searchZipcode} />
+      {results.length ? results.map(result => <Results result={result} key={result.place_id}/>) : null}
     </div>
   );
 }
