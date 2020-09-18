@@ -17,8 +17,10 @@ const Results = ({result}) => {
 
   return (
     <div className="result">
-      <h6>{result.name}</h6>
-      <input type="checkbox" checked={checked} onChange={() => toggleChecked()}/>
+      <span className="result-content">
+        <p>{result.name}</p>
+        <input type="checkbox" checked={checked} onChange={() => toggleChecked()}/>
+      </span>
     </div>
   )
  }

@@ -11,4 +11,15 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 20px;
+}
+
+.result-content{
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px black solid;
+  border-right: 1px black solid;
+  padding: 0 10px;
 }
